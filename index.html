@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Food Construct — Доставка бизнес-ланчей в Москве</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #fff;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    header {
+      padding: 1.5rem 2rem;
+      background-color: white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    header h1 {
+      font-size: 2.2rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #222;
+    }
+
+    nav {
+      display: flex;
+      gap: 2rem;
+      font-size: 1.1rem;
+      font-weight: 500;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #333;
+    }
+
+    nav a:hover {
+      color: #d32f2f;
+      border-bottom: 2px solid #d32f2f;
+    }
+
+    main {
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .hero-image {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    section {
+      margin-bottom: 3rem;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: #222;
+    }
+
+    p {
+      font-size: 1.1rem;
+      margin-bottom: 1.2rem;
+    }
+
+    ul {
+      padding-left: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    ul li {
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      border: 1px solid #eee;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    table th,
+    table td {
+      padding: 0.8rem 1.2rem;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+
+    table th {
+      background-color: #fafafa;
+      font-weight: 600;
+      font-size: 1.05rem;
+    }
+
+    footer {
+      background-color: black;
+      color: white;
+      padding: 2rem;
+      text-align: center;
+      margin-top: 3rem;
+    }
+
+    footer a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      margin: 0 0.5rem;
+    }
+
+    footer a:hover {
+      color: #ffebee;
+      text-decoration: underline;
+    }
+
+    /* === Форма обратной связи === */
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-weight: 500;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.6rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+    }
+
+    .form-group textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .radio-option {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.9rem;
+    }
+
+    .checkbox-group input {
+      margin-top: 0.9rem;
+    }
+
+    button[type="submit"] {
+      background-color: #d32f2f;
+      color: white;
+      border: none;
+      padding: 0.8rem 2rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #b71c1c;
+    }
+
+    /* === Страница аутентификации === */
+    #auth-page {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3') center/cover no-repeat;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .auth-container {
+      background: rgba(255, 255, 255, 0.92);
+      padding: 2.5rem;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    .auth-container h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #222;
+    }
+
+    .auth-form .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .auth-form .checkbox-group {
+      justify-content: space-between;
+      margin-top: 0.5rem;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 1rem;
+      color: #d32f2f;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Food Construct</h1>
+    <nav>
+      <a href="#about">О нас</a>
+      <a href="#build-lunch">Собрать ланч</a>
+      <a href="#orders">Заказы</a>
+      <a href="#feedback">Обратная связь</a>
+      <a href="#auth-page" onclick="showAuth()">Войти</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="hero">
+      <img src="image/interioor.jpg" alt="Вкусные бизнес-ланчи от Food Construct" class="hero-image">
+    </section>
+
+    <section id="about">
+      <h2>О нас</h2>
+      <p>Food Construct — доставка бизнес-ланчей в Москве. Мы привезем вам горячую вкусную еду в любую точку города к назначенному времени.</p>
+    </section>
+
+    <section id="advantages">
+      <h2>Преимущества Food Construct</h2>
+      <ul>
+        <li>Горячие блюда прямо к вашему столу</li>
+        <li>Быстрая доставка в течение часа</li>
+        <li>Широкий выбор блюд для любого вкуса</li>
+      </ul>
+    </section>
+
+    <section id="dishes">
+      <h2>Популярные блюда</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Название блюда</th>
+            <th>Цена (руб.)</th>
+            <th>Калории</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Куриная грудка с овощами</td>
+            <td>290</td>
+            <td>320</td>
+          </tr>
+          <tr>
+            <td>Говядина по-строгановски</td>
+            <td>320</td>
+            <td>410</td>
+          </tr>
+          <tr>
+            <td>Паста с грибами и сливочным соусом</td>
+            <td>280</td>
+            <td>380</td>
+          </tr>
+          <tr>
+            <td>Рыба на гриле с рисом</td>
+            <td>350</td>
+            <td>360</td>
+          </tr>
+          <tr>
+            <td>Овощное рагу с киноа</td>
+            <td>270</td>
+            <td>290</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Форма обратной связи -->
+    <section id="feedback">
+      <h2>Обратная связь</h2>
+      <form action="https://httpbin.org/post" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="fullname">ФИО</label>
+          <input type="text" id="fullname" name="fullname" required>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+
+        <div class="form-group">
+          <label>Откуда узнали о нас?</label>
+          <div class="radio-group">
+            <div class="radio-option">
+              <input type="radio" id="source1" name="source" value="social" required>
+              <label for="source1">Соцсети</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="source2" name="source" value="friends">
+              <label for="source2">От друзей</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="source3" name="source" value="ads">
+              <label for="source3">Реклама</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="source4" name="source" value="other">
+              <label for="source4">Другое</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="type">Тип обращения</label>
+          <select id="type" name="type" required>
+            <option value="">— Выберите —</option>
+            <option value="complaint">Жалоба</option>
+            <option value="suggestion">Предложение</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Сообщение</label>
+          <textarea id="message" name="message" placeholder="Напишите ваше сообщение..." required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="attachment">Вложения (опционально)</label>
+          <input type="file" id="attachment" name="attachment">
+        </div>
+
+        <div class="form-group">
+          <div class="checkbox-group">
+            <input type="checkbox" id="privacy" name="privacy" required>
+            <label for="privacy">Даю согласие на обработку персональных данных</label>
+          </div>
+        </div>
+
+        <button type="submit">Отправить</button>
+      </form>
+    </section>
+  </main>
+
+  <!-- Страница аутентификации -->
+  <div id="auth-page">
+    <div class="auth-container">
+      <h2>Вход в аккаунт</h2>
+      <form class="auth-form" action="https://httpbin.org/post" method="POST">
+        <div class="form-group">
+          <label for="login">Логин</label>
+          <input type="text" id="login" name="login" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Пароль</label>
+          <input type="password" id="password" name="password" required>
+        </div>
+        <div class="checkbox-group">
+          <label>
+            <input type="checkbox" name="remember" value="1"> Запомнить меня
+          </label>
+        </div>
+        <button type="submit">Войти</button>
+        <a href="#" class="back-link" onclick="hideAuth()">← Вернуться на сайт</a>
+      </form>
+    </div>
+  </div>
+
+  <footer id="footer">
+    <p>Связаться с нами: <a href="tel:+74951234567">+7 (495) 123-45-67</a> | <a href="mailto:info@foodconstruct.ru">info@foodconstruct.ru</a></p>
+  </footer>
+
+  <script>
+    function showAuth() {
+      document.getElementById('auth-page').style.display = 'flex';
+    }
+
+    function hideAuth() {
+      document.getElementById('auth-page').style.display = 'none';
+    }
+
+    // Закрытие по Esc
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') hideAuth();
+    });
+  </script>
+</body>
+</html>
